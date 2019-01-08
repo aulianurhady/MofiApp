@@ -1,6 +1,7 @@
 var http = require('http');
 var fs = require('fs');
-var url = require('url');
+var formid = require('formidable');
+var mv = require('mv');
 
 http.createServer((request, response) => {
 	
@@ -26,6 +27,24 @@ http.createServer((request, response) => {
 				
 		};
 	};
+
+	if (request.method === "POST") {
+		var form = new formid.IncomingForm();
+
+		form.parse(request, (err, fields, files) => {
+			var oldpath = files.filetoupload.path;
+			var newpath = __dirname + "/uploads/" + files.filetoupload.name;
+
+			mv(oldpath, newpath, (err) => {
+				if (err) {
+					throw err;
+				}
+
+				console.log('file uploaded successfully');
+				return response.end("file uploaded successfully");
+			});
+		});
+	}
 }).listen(8000);
 
 console.log("Listening to http://localhost:8000");
