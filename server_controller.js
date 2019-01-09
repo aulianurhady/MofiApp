@@ -4,15 +4,13 @@ var formid = require('formidable');
 var mv = require('mv');
 
 http.createServer((request, response) => {
-	
+	console.log("Method: " + request.method);
 	if (request.method === "GET") {
 		switch (request.url) {
 			case '/':
 				fs.readFile("index.html", (err, data) => {
 					response.writeHead(200, {'Content-Type': 'text/html'});
 					if (err) throw err;
-
-					console.log("data: " + data);
 
 					response.end(data);
 				});
@@ -34,6 +32,9 @@ http.createServer((request, response) => {
 		form.parse(request, (err, fields, files) => {
 			var oldpath = files.filetoupload.path;
 			var newpath = __dirname + "/uploads/" + files.filetoupload.name;
+
+			console.log("old path: " + oldpath);
+			console.log("new path: " + newpath);
 
 			mv(oldpath, newpath, (err) => {
 				if (err) {
