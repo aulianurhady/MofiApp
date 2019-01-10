@@ -5,8 +5,17 @@ var mv = require('mv');
 
 http.createServer((request, response) => {
 	console.log("Method: " + request.method);
+	console.log("URL: " + request.url);
 	if (request.method === "GET") {
 		switch (request.url) {
+			case '/index.css':
+				fs.readFile("index.css", (err, data) => {
+					response.writeHead(200, {'Content-Type': 'text/css'});
+					if (err) throw err;
+
+					response.end(data);
+				})
+				break;
 			case '/':
 				fs.readFile("index.html", (err, data) => {
 					response.writeHead(200, {'Content-Type': 'text/html'});
@@ -21,8 +30,8 @@ http.createServer((request, response) => {
 					if (err) throw err;
 
 					response.end(data);
-				})
-				
+				});
+				break;
 		};
 	};
 

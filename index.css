@@ -1,0 +1,17 @@
+.navbar {
+    width: 100%;
+    background-color: rgb(124, 123, 123);
+    overflow: auto;
+}
+
+.navbar a {
+    float: left;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 12px;
+}
+
+.navbar a:hover {
+    background-color: aliceblue;
+}
